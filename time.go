@@ -6,7 +6,7 @@ import (
 )
 
 func plural(count int, singular string) (result string) {
-	if (count == 1) || (count == 0) {
+	if count == 1 {
 		result = strconv.Itoa(count) + " " + singular + " "
 	} else {
 		result = strconv.Itoa(count) + " " + singular + "s "
