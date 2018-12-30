@@ -17,6 +17,7 @@ type Response struct {
 	UUID      string `json:"uuid"`
 	Name      string `json:"name"`
 	TotalTime int    `json:"time_total"`
+	State     string
 }
 
 func createFile() {
@@ -34,6 +35,7 @@ func createFile() {
 
 	fmt.Println("==> done creating file", "lastJob.txt")
 }
+
 func readFile() (b []byte) {
 	createFile()
 	// read the whole file at once
@@ -100,7 +102,12 @@ func main() {
 	lastJob := readFile()
 	currJob := getJob(um3URI)
 
+	// fileStat()
+
 	if string(lastJob) != currJob.UUID {
+		if currJob.State == "pre_print" {
+			return
+		}
 		writeFile([]byte(currJob.UUID))
 		newMsg := fmt.Sprint("woot! new printjob: `", currJob.Name, "` -- time: ", secondsToHuman(currJob.TotalTime), "-- https://ultimaker.hackrva.org")
 
