@@ -113,7 +113,7 @@ func main() {
 
 		// if the job will take longer than 3 hours post
 		// to 3d printing channel
-		if hours > 2 {
+		if hours > 3 {
 			postJob(newMsg, slackHook)
 		}
 
