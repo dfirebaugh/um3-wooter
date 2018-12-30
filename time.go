@@ -45,3 +45,8 @@ func secondsToHuman(input int) (result string) {
 
 	return
 }
+
+func secondsToHours(input int) (result int) {
+	result = input / 3600
+	return
+}

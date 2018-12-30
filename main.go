@@ -97,12 +97,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	slackHook := os.Getenv("SLACK_HOOK")
+	slackHookAll := os.Getenv("SLACK_HOOK_ALL")
 	um3URI := os.Getenv("UM3_URI")
 
 	lastJob := readFile()
 	currJob := getJob(um3URI)
-
-	// fileStat()
+	hours := secondsToHours(currJob.TotalTime)
 
 	if string(lastJob) != currJob.UUID {
 		if currJob.State == "pre_print" {
@@ -111,6 +111,12 @@ func main() {
 		writeFile([]byte(currJob.UUID))
 		newMsg := fmt.Sprint("woot! new printjob: `", currJob.Name, "` -- time: ", secondsToHuman(currJob.TotalTime), "-- https://ultimaker.hackrva.org")
 
-		postJob(newMsg, slackHook)
+		// if the job will take longer than 3 hours post
+		// to 3d printing channel
+		if hours > 2 {
+			postJob(newMsg, slackHook)
+		}
+
+		postJob(newMsg, slackHookAll)
 	}
 }
