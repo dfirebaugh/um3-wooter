@@ -13,6 +13,7 @@ func plural(count int, singular string) (result string) {
 	}
 	return
 }
+
 func secondsToHuman(input int) (result string) {
 	years := math.Floor(float64(input) / 60 / 60 / 24 / 7 / 30 / 12)
 	seconds := input % (60 * 60 * 24 * 7 * 30 * 12)
