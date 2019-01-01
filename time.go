@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"strconv"
+	"time"
 )
 
 func plural(count int, singular string) (result string) {
@@ -14,7 +15,7 @@ func plural(count int, singular string) (result string) {
 	return
 }
 
-func secondsToHuman(input int) (result string) {
+func secondsToHuman(input int64) (result string) {
 	years := math.Floor(float64(input) / 60 / 60 / 24 / 7 / 30 / 12)
 	seconds := input % (60 * 60 * 24 * 7 * 30 * 12)
 	months := math.Floor(float64(seconds) / 60 / 60 / 24 / 7 / 30)
@@ -47,7 +48,17 @@ func secondsToHuman(input int) (result string) {
 	return
 }
 
-func secondsToHours(input int) (result int) {
+// howLong -- @param jobTime int
+// takes in jobTime in seconds and adds to now
+// returns a time stamp of when the job should finish
+func howLong(jobTime int64) (finishes time.Time) {
+	now := time.Now() // current local time
+	sec := now.Unix() // now in seconds
+	finishes = time.Unix(sec+jobTime, 0)
+	return
+}
+
+func secondsToHours(input int64) (result int64) {
 	result = input / 3600
 	return
 }
