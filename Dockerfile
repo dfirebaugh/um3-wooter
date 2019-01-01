@@ -9,7 +9,7 @@ ADD *.go src/
 ADD . /go/src/app
 
 # build main.go
-RUN go build -o um3wooter src/main.go src/time.go
+RUN go build -o um3wooter src/*.go
 
 RUN apt-get update && \
   apt-get install -y \ 
