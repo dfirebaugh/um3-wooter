@@ -25,6 +25,4 @@ RUN echo '*/5 * * * * cd /go/src/app && ./um3wooter' > /etc/cron.d/um3
 # # Apply cron job
 RUN crontab /etc/cron.d/um3
 
-# # Create the log file to be able to run tail
-RUN touch /var/log/cron.log
 CMD cron -f

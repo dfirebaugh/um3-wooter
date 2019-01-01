@@ -51,10 +51,15 @@ func secondsToHuman(input int64) (result string) {
 // howLong -- @param jobTime int
 // takes in jobTime in seconds and adds to now
 // returns a time stamp of when the job should finish
-func howLong(jobTime int64) (finishes time.Time) {
+func howLong(jobTime int64) (finishes string) {
 	now := time.Now() // current local time
 	sec := now.Unix() // now in seconds
-	finishes = time.Unix(sec+jobTime, 0)
+	loc, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		panic(err)
+	}
+
+	finishes = time.Unix(sec+jobTime, 0).In(loc).Format("Mon 02/01/06 03:04:05 PM")
 	return
 }
 

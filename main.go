@@ -35,8 +35,8 @@ func main() {
 			return
 		}
 		writeFile([]byte(currJob.UUID))
-		newMsg := fmt.Sprint("woot! new printjob!\n`",
-			currJob.Name, "`: ```time: ",
+		newMsg := fmt.Sprint("woot! new printjob:\n\t`",
+			currJob.Name, "`\n ```time: ",
 			secondsToHuman(currJob.TotalTime),
 			"\nfinishes: ",
 			finishes,
