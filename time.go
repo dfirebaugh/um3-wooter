@@ -59,7 +59,7 @@ func howLong(jobTime int64) (finishes string) {
 		panic(err)
 	}
 
-	finishes = time.Unix(sec+jobTime, 0).In(loc).Format("Mon 02/01/06 03:04:05 PM")
+	finishes = time.Unix(sec+jobTime, 0).In(loc).Format("Mon 01/02/06 03:04:05 PM")
 	return
 }
 
