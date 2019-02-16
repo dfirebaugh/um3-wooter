@@ -21,13 +21,12 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
 	slackHook := os.Getenv("SLACK_HOOK")
-	slackHookAll := os.Getenv("SLACK_HOOK_ALL")
 	um3URI := os.Getenv("UM3_URI")
 
 	lastJob := readFile()
 	currJob := getJob(um3URI)
-	hours := secondsToHours(currJob.TotalTime)
 	finishes := howLong(currJob.TotalTime)
 
 	if string(lastJob) != currJob.UUID {
@@ -42,12 +41,6 @@ func main() {
 			finishes,
 			"``` https://ultimaker.hackrva.org")
 
-		// if the job will take longer than 3 hours post
-		// to 3d printing channel
-		if hours > 3 {
-			postJob(newMsg, slackHook)
-		}
-
-		postJob(newMsg, slackHookAll)
+		postJob(newMsg, slackHook)
 	}
 }
