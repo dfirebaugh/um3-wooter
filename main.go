@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -16,14 +17,35 @@ type Response struct {
 	State     string
 }
 
+func getEnv(envvar string) (string, error) {
+	v := os.Getenv(envvar)
+
+	if len(v) == 0 {
+		return "", errors.New("that environment variable is not set")
+	}
+
+	return v, nil
+}
+
 func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	slackHook := os.Getenv("SLACK_HOOK")
-	um3URI := os.Getenv("UM3_URI")
+	slackHook, err := getEnv("SLACK_HOOK")
+
+	if err != nil {
+		fmt.Errorf("error getting slackHook %s", err.Error())
+		return
+	}
+
+	um3URI, err := getEnv("UM3_URI")
+
+	if err != nil {
+		fmt.Errorf("error getting um3URI %s", err.Error())
+		return
+	}
 
 	lastJob := readFile()
 	currJob := getJob(um3URI)
